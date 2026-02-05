@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Your Cart</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2 style="text-align:center;margin:30px;">🛒 Your Cart</h2>
+<div class="product-grid" id="cartItems"></div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+const grid = document.getElementById("cartItems");
+
+if (cart.length === 0) {
+    grid.innerHTML = "<h3 style='text-align:center'>Cart is empty 😢</h3>";
+}
+
+cart.forEach((item, index) => {
+    grid.innerHTML += `
+    <div class="card">
+        <img src="${item.image}">
+        <h3>${item.name}</h3>
+        <p>₹${item.price}</p>
+        <p>Qty: ${item.qty}</p>
+        <button onclick="removeItem(${index})">Remove</button>
+    </div>`;
+});
+
+function removeItem(i) {
+    cart.splice(i, 1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    location.reload();
+}
+</script>
+
+</body>
+</html>

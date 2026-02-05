@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopkeeper Panel | ShopEase</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="shopkeeper-dashboard.css">
+</head>
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h2>🏪 ShopEase</h2>
+        <ul>
+            <li class="active">Dashboard</li>
+            <li onclick="showAddProduct()">Add Product</li>
+            <li onclick="window.location.href='my-products.html'">My Products</li>
+            <li>Orders</li>
+            <li>Earnings</li>
+            <li>Profile</li>
+            <li class="logout">Logout</li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+        <h1>Welcome, Shopkeeper 👋</h1>
+
+        <!-- Stats -->
+        <div class="stats">
+            <div class="card">
+                <h3>Total Products</h3>
+                <p>12</p>
+            </div>
+            <div class="card">
+                <h3>Total Orders</h3>
+                <p>34</p>
+            </div>
+            <div class="card">
+                <h3>Total Earnings</h3>
+                <p>₹45,200</p>
+            </div>
+        </div>
+
+        <!-- Quick Action -->
+        <div class="action-box">
+            <h2>Add New Product</h2>
+            <button>Add Product</button>
+        </div>
+        <!-- Add Product Section -->
+    <div id="addProductSection" class="add-product-box" style="display:none;">
+
+    <h2>➕ Add New Product</h2>
+
+    <form onsubmit="saveProduct(event)">
+
+
+        <label>Product Image</label>
+        <input type="file" accept="image/*" onchange="previewProductImage(event)">
+        <img id="previewImage" style="display:none; width:120px; margin-top:10px; border-radius:8px;">
+
+
+        <label>Product Name</label>
+        <input type="text" placeholder="e.g. iPhone 15 Pro">
+
+        <label>Category</label>
+        <select>
+            <option>Select Category</option>
+            <option>Electronics</option>
+            <option>Clothing</option>
+            <option>Footwear</option>
+            <option>Accessories</option>
+        </select>
+
+        <label>Price (₹)</label>
+        <input type="number" placeholder="e.g. 9999">
+
+        <label>Stock</label>
+        <input type="number" placeholder="e.g. 20">
+
+        <label>Description</label>
+        <textarea rows="4" placeholder="Product details..."></textarea>
+
+        <button type="submit">Add Product</button>
+
+    </form>
+</div>
+    </main>
+</div>
+<script>
+    function showAddProduct() {
+        document.getElementById("addProductSection").style.display = "block";
+        window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    }
+    </script>
+<script>
+    function previewProductImage(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+    
+        const reader = new FileReader();
+        reader.onload = function () {
+            const img = document.getElementById("previewImage");
+            img.src = reader.result;
+            img.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+    }
+    </script>
+<script>
+    function saveProduct(e) {
+        e.preventDefault();
+    
+        const image = document.getElementById("previewImage").src;
+        const name = document.querySelector('input[placeholder="e.g. iPhone 15 Pro"]').value;
+        const category = document.querySelector("select").value;
+        const price = document.querySelector('input[placeholder="e.g. 9999"]').value;
+        const stock = document.querySelector('input[placeholder="e.g. 20"]').value;
+        const description = document.querySelector("textarea").value;
+    
+        if (!image || !name || category === "Select Category") {
+            alert("Please fill all details");
+            return;
+        }
+    
+        const product = {
+            id: Date.now(),
+            image,
+            name,
+            category,
+            price,
+            stock,
+            description
+        };
+    
+        let products = JSON.parse(localStorage.getItem("products")) || [];
+        products.push(product);
+        localStorage.setItem("products", JSON.stringify(products));
+    
+        alert("✅ Product Added Successfully");
+    
+        e.target.reset();
+        document.getElementById("previewImage").style.display = "none";
+    }
+    </script>
+    
+</body>
+</html>

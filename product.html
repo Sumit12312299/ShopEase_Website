@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Details | ShopEase</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Navbar (same as index) -->
+<header class="navbar">
+    <div class="logo">ShopEase</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="#">Shop</a>
+        <a href="#">Deals</a>
+    </nav>
+    <button class="cart-btn">🛒 Cart</button>
+</header>
+
+<!-- Product Detail -->
+<section class="product-detail">
+
+    <!-- Left: Image -->
+    <div class="product-images">
+        <img id="mainImage" src="" alt="Product">
+    </div>
+
+    <!-- Right: Info -->
+    <div class="product-info">
+        <h1 id="pName"></h1>
+
+        <div class="rating">
+            ⭐⭐⭐⭐☆ <span>(1,245 ratings)</span>
+        </div>
+
+        <p class="price">₹<span id="pPrice"></span></p>
+
+        <p class="description" id="pDesc"></p>
+
+        <div class="quantity">
+            <label>Qty:</label>
+            <select>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+            </select>
+        </div>
+
+        <div class="actions">
+            <button class="add-cart">Add to Cart</button>
+            <button class="buy-now">Buy Now</button>
+        </div>
+    </div>
+
+</section>
+
+<script>
+const product = JSON.parse(localStorage.getItem("selectedProduct"));
+
+document.getElementById("mainImage").src = product.image;
+document.getElementById("pName").innerText = product.name;
+document.getElementById("pPrice").innerText = product.price;
+document.getElementById("pDesc").innerText = product.description || 
+    "High quality product with best price and durability.";
+</script>
+
+</body>
+</html>

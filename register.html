@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register | ShopEase</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+
+<div class="register-container">
+    <div class="register-box">
+        <h2>Create Account ✨</h2>
+        <p>Join us and start shopping</p>
+        <div class="role-selector">
+            <button class="role-btn active" onclick="selectRole('customer')">
+                👤 Customer
+            </button>
+            <button class="role-btn" onclick="selectRole('vendor')">
+                🏪 Vendor / Shopkeeper
+            </button>
+        </div>
+        
+        <form onsubmit="register(event)">
+            <input type="text" placeholder="Full Name" required>
+            <input type="email" placeholder="Email" required>
+        
+            <!-- Vendor-only fields -->
+            <div id="vendorFields" style="display:none;">
+                <input type="text" placeholder="Shop Name">
+                <input type="text" placeholder="Shop Address">
+                <input type="tel" placeholder="Mobile Number">
+            </div>
+        
+            <input type="password" placeholder="Password" required>
+            <input type="password" placeholder="Confirm Password" required>
+        
+            <button type="submit">Register</button>
+        </form>
+        
+
+        <span class="login-text">
+            Already have an account? <a href="login.html">Login</a>
+        </span>
+    </div>
+</div>
+
+<script>
+    let selectedRole = "customer";
+    
+    function selectRole(role) {
+        selectedRole = role;
+    
+        document.querySelectorAll(".role-btn").forEach(btn => {
+            btn.classList.remove("active");
+        });
+    
+        event.target.classList.add("active");
+    
+        document.getElementById("vendorFields").style.display =
+            role === "vendor" ? "block" : "none";
+    }
+    
+    function register(e) {
+        e.preventDefault();
+    
+        const name = document.querySelector('input[placeholder="Full Name"]').value;
+        const email = document.querySelector('input[type="email"]').value;
+        const password = document.querySelectorAll('input[type="password"]')[0].value;
+        const confirmPassword = document.querySelectorAll('input[type="password"]')[1].value;
+    
+        if (password !== confirmPassword) {
+            alert("Passwords do not match");
+            return;
+        }
+    
+        fetch("http://localhost:8080/api/auth/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: name,
+                email: email,
+                password: password,
+                role: selectedRole
+            })
+        })
+        .then(res => res.text())
+        .then(data => {
+            alert(data);
+            window.location.href = "login.html";
+        })
+        .catch(err => {
+            alert("Server error");
+            console.error(err);
+        });
+    }
+    </script>
+    
+    
+    
+
+</body>
+</html>

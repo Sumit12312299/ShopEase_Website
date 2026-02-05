@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Owner Panel | ShopEase</title>
+    <link rel="stylesheet" href="owner-dashboard.css">
+</head>
+<body>
+
+<!-- 🔐 SECURITY CHECK -->
+<script>
+    const isLoggedIn = localStorage.getItem("loggedIn");
+    const role = localStorage.getItem("role");
+
+    if (isLoggedIn !== "true" || role !== "owner") {
+        window.location.href = "login.html";
+    }
+</script>
+
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <h2>👑 Owner Panel</h2>
+        <ul>
+            <li class="active">Dashboard</li>
+            <li>Users</li>
+            <li>Vendors</li>
+            <li>Analytics</li>
+            <li onclick="logout()">Logout</li>
+        </ul>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="content">
+        <h1>Platform Overview</h1>
+
+        <div class="cards">
+            <div class="card">👥 Total Users<br><b>120</b></div>
+            <div class="card">🛒 Customers<br><b>85</b></div>
+            <div class="card">🏪 Vendors<br><b>35</b></div>
+            <div class="card">⏳ Pending Vendors<br><b>5</b></div>
+        </div>
+    </main>
+
+</div>
+
+
+</body>
+</html>

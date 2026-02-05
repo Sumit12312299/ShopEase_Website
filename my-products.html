@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Products</title>
+    <link rel="stylesheet" href="shopkeeper-dashboard.css">
+</head>
+<body>
+
+<h2 style="padding:20px">📦 My Products</h2>
+
+<div id="productList" style="display:grid; grid-template-columns:repeat(auto-fill,250px); gap:20px; padding:20px"></div>
+
+<script>
+const products = JSON.parse(localStorage.getItem("products")) || [];
+const list = document.getElementById("productList");
+
+products.forEach(p => {
+    list.innerHTML += `
+        <div class="card">
+            <img src="${p.image}" style="width:100%; height:180px; object-fit:cover">
+            <h3>${p.name}</h3>
+            <p>₹${p.price}</p>
+            <small>${p.category}</small>
+        </div>
+    `;
+});
+</script>
+
+</body>
+</html>
